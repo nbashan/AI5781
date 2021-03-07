@@ -5,7 +5,7 @@ def create(s):
     return [[s], 0, 0 ,0]
 
 
-#hello world
+#hello world yo
 def is_empty(f):
     return f[0]==[]
 
