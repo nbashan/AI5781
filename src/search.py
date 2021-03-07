@@ -17,12 +17,19 @@ def search(n,i):
         for i in ns:
             frontier.insert(f,i)
     return 0
-
+# the maximum depth average for a 3 by 3 size board
 omekMax3 = 0
+# the maximum depth average for a 4 by 4 size board
 omekMax4 = 0
+# the average number of tests for a 3 by 3 size board
 misBdik3 = 0
+# the average number of tests for a 4 by 4 size board
 misBdik4 = 0
 
+# A loop that runs the algorithm 100 times<
+# calculates the required averages.
+# At the end of the program the averages are printed.
+# Also for the convenience of the debugging operation we printed out the state itself each time
 for i in range(100):
     _3 = search(3,i)
     _4 = search(4,i)
