@@ -1,14 +1,14 @@
+# Netanel Bashan, 323056077, netanebashan12@gmail.com
+# Elyasaf Dimant, 204006415, elyasafdi@gmail.com
 #search
 import state
 import frontier
 
-
-#hello world yo yo yoyy
 def search(n,i):
     s=state.create(n)
     print(s)
     print(i)
-    f=frontier.create(s)
+    f = frontier.create(s)
     while not frontier.is_empty(f):
         s=frontier.remove(f)
         if state.is_target(s):
@@ -17,9 +17,6 @@ def search(n,i):
         for i in ns:
             frontier.insert(f,i)
     return 0
-
-
-
 
 omekMax3 = 0
 omekMax4 = 0

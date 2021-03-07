@@ -4,7 +4,6 @@ import state
 def create(s):
     return [[s], 0, 0 ,0]
 
-
 #hello world yo
 def is_empty(f):
     return f[0]==[]
@@ -52,6 +51,3 @@ def heapify(f,i):
         f[minSon]=f[i]
         f[i]=t
         heapify(f, minSon)
-        
-        
-    

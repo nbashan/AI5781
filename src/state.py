@@ -29,7 +29,6 @@ def get_next(x):            # returns a list of the children states of x
             ns.append([s,x[1]+i])   # appends the new state to ns
     return ns
 
-
 def path_len(x):
     return len(x[1])
 
@@ -72,15 +71,8 @@ def hdistance2(s):
         sum += abs(iE - iS) + abs(jE - jS)
     return sum
 
-
 def getStart(i,list):
     return i%(math.sqrt(len(list))),i//(math.sqrt(len(list)))
-
-
-
-
-
-
 
 '''
 solution
@@ -92,4 +84,3 @@ def hdistance(s):
             c+=1
     return c
 '''
-
