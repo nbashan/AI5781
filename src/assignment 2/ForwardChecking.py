@@ -51,7 +51,7 @@ def solve_queen():
         display()
         print(number_of_moves)'''
         while column < size:
-            while matrix[row][column] != 0:
+            while matrix[row][column] != 0 and column != size - 1:
                 column += 1
             number_of_iterations += 1
             if next_row_is_safe(column):
@@ -95,22 +95,22 @@ def solve_queen():
 # That we now have to define
 
 def place_in_next_row(column):
-    row = len(columns)
+    row = len(columns) + 1
     # check diagonal
     for i in range(row, size):
         for j in range(size):
-            if (i - j == column - row or i == column or j == row) and matrix[i][j] != 0:
+            if (j - i == column - row + 1 or size - j - i == size - column - row + 1 or j == column) and matrix[i][j] == 0:
                 matrix[i][j] = row
-
     columns.append(column)
 
 
 def remove_in_current_row():
     if len(columns) > 0:
+        row = len(columns)
         column = columns.pop()
         for i in range(size):
             for j in range(size):
-                if matrix[i][j] == column:
+                if matrix[i][j] == row:
                     matrix[i][j] = 0
         return column
     return -1
@@ -120,23 +120,9 @@ def next_row_is_safe(column):
     row = len(columns)
     # check column
 
-    if matrix[column][row] != 0:
+    if matrix[row][column] != 0:
         return False
 
-    for queen_column in columns:
-        if column == queen_column:
-            return False
-
-    # check diagonal
-    for queen_row, queen_column in enumerate(columns):
-        if queen_column - queen_row == column - row:
-            return False
-
-    # check other diagonal
-    for queen_row, queen_column in enumerate(columns):
-        if ((size - queen_column) - queen_row
-                == (size - column) - row):
-            return False
     return True
 
 
@@ -156,7 +142,7 @@ def init():
 # sum = 0, iter = 0
 # for i in range(0, 100):
 #    columns = [] #columns is the locations for each of the queens
-size = 40
+size = 18
 init()
 iter, sum = solve_queen()
 print("# of iterations:", iter)
