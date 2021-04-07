@@ -2,7 +2,7 @@ import random
 
 # As we did in class,
 # we will represent the board as a one-dimensional array where each position
-# in the arrray is the n'th queen's column value. So if the array is: [1, 3, 0, 2],
+# in the array is the n'th queen's column value. So if the array is: [1, 3, 0, 2],
 # then the first queen is in position 1 (from 0--3), the second queen is in position 3 (the last column),
 # the third queen is in the first column and the last queen is the in the second position.
 
