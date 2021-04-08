@@ -1,33 +1,32 @@
+# Netanel Bashan, 323056077, netanebashan12@gmail.com
+# Elyasaf Dimant, 204006415, elyasafdi@gmail.com
 import random
 
-
-
-
-#As we did in class,
+# As we did in class,
 # we will represent the board as a one-dimensional array where each position
-# in the arrray is the n'th queen's column value. So if the array is: [1, 3, 0, 2],
+# in the array is the n'th queen's column value. So if the array is: [1, 3, 0, 2],
 # then the first queen is in position 1 (from 0--3), the second queen is in position 3 (the last column),
 # the third queen is in the first column and the last queen is the in the second position.
-
+size = 8
 columns = []
 # columns is the locations for each of the queens
 # columns[r] is a number c if a queen is placed at row r and column c.
-size = 8
+
 # hint -- you will need this for the following code: column=random.randrange(0,size)
 
-#Let's setup one iteration of the British Museum algorithm-- we'll put down 4 queens randomly.
+# Let's setup one iteration of the British Museum algorithm-- we'll put down 4 queens randomly.
+
+
 def place_n_queens(size):
     columns.clear()
     row = 0
     while row < size:
-        column=random.randrange(0,size-1)
+        column = random.randrange(0, size-1)
         columns.append(column)
-        row+=1
+        row += 1
 
 
-place_n_queens(size)
-
-#Now, we can print the result with a simple loop:
+# Now, we can print the result with a simple loop:
 def display():
     for row in range(len(columns)):
         for column in range(size):
@@ -42,7 +41,8 @@ place_n_queens(size)
 display()
 print(columns)
 
-#This of course is not necessary legal, so we'll write a simple DFS search with backtracking:
+
+# This of course is not necessary legal, so we'll write a simple DFS search with backtracking:
 def solve_queen(size):
     columns.clear()
     number_of_moves = 0  # where do I change this so it counts the number of Queen moves?
@@ -60,14 +60,14 @@ def solve_queen(size):
             number_of_iterations += 1
             if next_row_is_safe(column):
                 place_in_next_row(column)
-                number_of_moves+=1
+                number_of_moves += 1
                 row += 1
                 column = 0
                 break
             else:
                 column += 1
         # if I could not find an open column or if board is full
-        if (column == size or row == size):
+        if column == size or row == size:
             number_of_iterations += 1
             # if board is full, we have a solution
             if row == size:
@@ -78,7 +78,7 @@ def solve_queen(size):
             # I couldn't find a solution so I now backtrack
             prev_column = remove_in_current_row()
             number_of_moves += 1
-            if (prev_column == -1):  # I backtracked past column 1
+            if prev_column == -1:  # I backtracked past column 1
                 print("There are no solutions")
                 # print(number_of_moves)
                 return number_of_iterations, number_of_moves
@@ -88,15 +88,15 @@ def solve_queen(size):
             column = 1 + prev_column
 
 
-#This code is nice, but it uses three functions:
+# This code is nice, but it uses three functions:
 
-#place_in_next_row
+# place_in_next_row
 
-#remove_in_current_row
+# remove_in_current_row
 
-#next_row_is_safe
+# next_row_is_safe
 
-#That we now have to define
+# That we now have to define
 
 def place_in_next_row(column):
     columns.append(column)
@@ -127,19 +127,17 @@ def next_row_is_safe(column):
             return False
     return True
 
-
-
-#Things should be ok but we don't have the counters I asked for.
+# Things should be ok but we don't have the counters I asked for.
 # That will be the first things you'll need to add.
 # Either way, let's print what we have:
-
 
 # size = int(input('Enter n: '))
 # sum = 0, iter = 0
 # for i in range(0, 100):
-#    columns = [] #columns is the locations for each of the queens
+# columns = [] #columns is the locations for each of the queens
+
+
 iter, sum = solve_queen(size)
 print("# of iterations:", iter)
 print("# of queens placed + backtracks:", sum)
 print(columns)
-

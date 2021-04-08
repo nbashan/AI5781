@@ -1,3 +1,5 @@
+# Netanel Bashan, 323056077, netanebashan12@gmail.com
+# Elyasaf Dimant, 204006415, elyasafdi@gmail.com
 import random
 
 # As we did in class,
@@ -14,8 +16,8 @@ matrix = []
 
 
 # hint -- you will need this for the following code: column=random.randrange(0,size)
-
 # Let's setup one iteration of the British Museum algorithm-- we'll put down 4 queens randomly.
+
 def place_n_queens():
     columns.clear()
     row = 0
@@ -51,9 +53,9 @@ def solve_queen():
         display()
         print(number_of_moves)'''
         while column < size:
+            number_of_iterations += 1
             while matrix[row][column] != 0 and column != size - 1:
                 column += 1
-            number_of_iterations += 1
             if next_row_is_safe(column):
                 place_in_next_row(column)
                 number_of_moves += 1
@@ -83,14 +85,11 @@ def solve_queen():
             # start checking at column = (1 + value of column in previous row)
             column = 1 + prev_column
 
-
 # This code is nice, but it uses three functions:
-
 # place_in_next_row
-
 # remove_in_current_row
-
 # next_row_is_safe
+
 
 # That we now have to define
 
@@ -132,17 +131,17 @@ def init():
         for j in range(size):
             matrix[i].append(0)
 
-
 # Things should be ok but we don't have the counters I asked for.
 # That will be the first things you'll need to add.
 # Either way, let's print what we have:
-
 
 # size = int(input('Enter n: '))
 # sum = 0, iter = 0
 # for i in range(0, 100):
 #    columns = [] #columns is the locations for each of the queens
-size = 18
+
+
+size = 8
 init()
 iter, sum = solve_queen()
 print("# of iterations:", iter)
