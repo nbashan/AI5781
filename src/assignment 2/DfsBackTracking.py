@@ -9,6 +9,8 @@ import random
 # the third queen is in the first column and the last queen is the in the second position.
 size = 8
 columns = []
+
+
 # columns is the locations for each of the queens
 # columns[r] is a number c if a queen is placed at row r and column c.
 
@@ -21,7 +23,7 @@ def place_n_queens(size):
     columns.clear()
     row = 0
     while row < size:
-        column = random.randrange(0, size-1)
+        column = random.randrange(0, size - 1)
         columns.append(column)
         row += 1
 
@@ -126,6 +128,7 @@ def next_row_is_safe(column):
                 == (size - column) - row):
             return False
     return True
+
 
 # Things should be ok but we don't have the counters I asked for.
 # That will be the first things you'll need to add.
