@@ -120,6 +120,8 @@ def next_row_is_safe(column):
     row = len(columns)
     # check column
 
+
+#
     if matrix[row][column] != 0:
         return False
 
