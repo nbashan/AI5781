@@ -18,7 +18,7 @@ matrix = []
 # hint -- you will need this for the following code: column=random.randrange(0,size)
 # Let's setup one iteration of the British Museum algorithm-- we'll put down 4 queens randomly.
 
-def place_n_queens():
+def place_n_queens(size):
     columns.clear()
     row = 0
     while row < size:
@@ -28,7 +28,7 @@ def place_n_queens():
 
 
 # Now, we can print the result with a simple loop:
-def display():
+def display(size):
     for row in range(len(columns)):
         for column in range(size):
             if column == columns[row]:
@@ -39,7 +39,7 @@ def display():
 
 
 # This of course is not necessary legal, so we'll write a simple DFS search with backtracking:
-def solve_queen():
+def solve_queen(size):
     columns.clear()
     number_of_moves = 0  # where do I change this so it counts the number of Queen moves?
     number_of_iterations = 0
@@ -57,8 +57,8 @@ def solve_queen():
             while matrix[row][column] != 0 and column != size - 1:
                 column += 1
                 number_of_iterations += 1
-            if next_row_is_safe(column):
-                place_in_next_row(column)
+            if next_row_is_safe(column, size):
+                place_in_next_row(column, size)
                 number_of_moves += 1
                 row += 1
                 column = 0
@@ -71,11 +71,11 @@ def solve_queen():
             # if board is full, we have a solution
             if row == size:
                 print("I did it! Here is my solution")
-                display()
+                display(size)
                 # print(number_of_moves)
                 return number_of_iterations, number_of_moves
             # I couldn't find a solution so I now backtrack
-            prev_column = remove_in_current_row()
+            prev_column = remove_in_current_row(size)
             number_of_moves += 1
             if prev_column == -1:  # I backtracked past column 1
                 print("There are no solutions")
@@ -94,7 +94,7 @@ def solve_queen():
 
 # That we now have to define
 
-def place_in_next_row(column):
+def place_in_next_row(column, size):
     row = len(columns) + 1
     # check diagonal
     for i in range(row, size):
@@ -104,7 +104,7 @@ def place_in_next_row(column):
     columns.append(column)
 
 
-def remove_in_current_row():
+def remove_in_current_row(size):
     if len(columns) > 0:
         row = len(columns)
         column = columns.pop()
@@ -116,7 +116,7 @@ def remove_in_current_row():
     return -1
 
 
-def next_row_is_safe(column):
+def next_row_is_safe(column, size):
     row = len(columns)
     # check column
 
@@ -126,7 +126,7 @@ def next_row_is_safe(column):
     return True
 
 
-def init():
+def init(size):
     for i in range(size):
         matrix.append([])
         for j in range(size):
@@ -142,9 +142,11 @@ def init():
 #    columns = [] #columns is the locations for each of the queens
 
 
-size = 27
-init()
-iter, sum = solve_queen()
-print("# of iterations:", iter)
-print("# of queens placed + backtracks:", sum)
-print(columns)
+def start(size):
+    size = 27
+    init(size)
+    iter, sum = solve_queen(size)
+    print("# of iterations:", iter)
+    print("# of queens placed + backtracks:", sum)
+    print(columns)
+    return iter, sum

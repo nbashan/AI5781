@@ -27,7 +27,7 @@ def place_n_queens(size):
 
 
 # Now, we can print the result with a simple loop:
-def display():
+def display(size):
     for row in range(len(columns)):
         for column in range(size):
             if column == columns[row]:
@@ -38,26 +38,27 @@ def display():
 
 
 # This of course is not necessary legal, so we'll write a simple DFS search with backtracking:
-def solve_queen(size):
+def  solve_queen(size):
     number_of_iterations = 1
     place_n_queens(size)
     # iterate over rows of board
-    while not solved():
+    while not solved(size):
         number_of_iterations += 1
         place_n_queens(size)
-        display()
+        display(size)
         print(columns)
     print("Solved:")
-    display()
+    display(size)
     print("iterations: ")
     print(number_of_iterations)
+    return number_of_iterations
 
 
-def solved():
+def solved(size):
     flag = True
     for i in range(1, size):
         if flag:
-            flag = next_row_is_safe(columns[i], i)
+            flag = next_row_is_safe(columns[i], i, size)
     return flag
 
 
@@ -71,7 +72,7 @@ def solved():
 
 # That we now have to define
 
-def next_row_is_safe(column, index):
+def next_row_is_safe(column, index, size):
     # row = len(columns)
     # check column
     for i in range(index):
@@ -91,5 +92,5 @@ def next_row_is_safe(column, index):
     return True
 
 
-size = 5
-solve_queen(size)
+def start(size):
+    return solve_queen(size)

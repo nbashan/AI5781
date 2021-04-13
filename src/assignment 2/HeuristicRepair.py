@@ -3,10 +3,11 @@
 import random
 
 columns = []
+number_of_iterations = 1
 
 
 # Let's setup one iteration of the British Museum algorithm-- we'll put down 4 queens randomly.
-def place_n_queens():
+def place_n_queens(size):
     columns.clear()
     row = 0
     while row < size:
@@ -15,17 +16,17 @@ def place_n_queens():
         row += 1
 
 
-def solve_queen():
+def solve_queen(size):
     global number_of_iterations
-    place_n_queens()
+    place_n_queens(size)
     # iterate over rows of board
 
     last_state_1 = []
     last_state_2 = []
-    deep_copy(columns, last_state_1)
+    deep_copy(columns, last_state_1, size)
     flag_pos = True
 
-    while not solved():
+    while not solved(size):
         number_of_iterations += 1
 
         max_decrease_threat = 0
@@ -33,14 +34,14 @@ def solve_queen():
         column_max_decrease_threat = (columns[0] + 1) % size
 
         for i in range(size):
-            queen_threat = amount_threatened(columns[i], i)
+            queen_threat = amount_threatened(columns[i], i, size)
 
             # loop over all columns in certain row
             for j in range(size):
                 if j != columns[i]:
 
                     # calls amount_threatened that accepts column and row
-                    queen_check = amount_threatened(j, i) + 3
+                    queen_check = amount_threatened(j, i, size) + 3
 
                     # found a place to move
                     if queen_threat - queen_check >= max_decrease_threat:
@@ -51,25 +52,25 @@ def solve_queen():
         move_most_threatened_queen(row_max_decrease_threat, column_max_decrease_threat)
         if not flag_pos and columns == last_state_1:
             print("hill climbing got stuck################################################################")
-            display()
+            display(size)
             return False
         if flag_pos:
-            deep_copy(columns, last_state_2)
+            deep_copy(columns, last_state_2, size)
             flag_pos = False
         else:
-            deep_copy(columns, last_state_1)
+            deep_copy(columns, last_state_1, size)
             flag_pos = True
 
-        display()
+        display(size)
         print(columns)
     print("Solved:")
-    display()
+    display(size)
     print("iterations: ")
     print(number_of_iterations)
-    return True
+    return number_of_iterations
 
 
-def deep_copy(list1, list2):
+def deep_copy(list1, list2, size):
     if len(list2) == 0:
         for i in range(size):
             list2.append(list1[i])
@@ -95,16 +96,16 @@ def move_most_threatened_queen(row, new_column):
     columns[row] = new_column
 
 
-def solved():
+def solved(size):
     flag = True
     for i in range(1, size):
         if flag:
-            flag = next_row_is_safe(columns[i], i)
+            flag = next_row_is_safe(columns[i], i, size)
     return flag
 
 
 # Now, we can print the result with a simple loop:
-def display():
+def display(size):
     for row in range(len(columns)):
         for column in range(size):
             if column == columns[row]:
@@ -114,7 +115,7 @@ def display():
         print()
 
 
-def next_row_is_safe(column, index):
+def next_row_is_safe(column, index, size):
     # row = len(columns)
     # check column
     for i in range(index):
@@ -134,7 +135,7 @@ def next_row_is_safe(column, index):
     return True
 
 
-def amount_threatened(column, row):
+def amount_threatened(column, row, size):
     counter = -3
 
     for queen_column in columns:
@@ -155,8 +156,8 @@ def amount_threatened(column, row):
     return counter
 
 
-size = 8
-number_of_iterations = 1
-a = solve_queen()
-while not a:
-    a = solve_queen()
+def start(size):
+    a = solve_queen(size)
+    while not a:
+        a = solve_queen(size)
+    return a
