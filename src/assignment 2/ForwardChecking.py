@@ -142,7 +142,7 @@ def init():
 #    columns = [] #columns is the locations for each of the queens
 
 
-size = 8
+size = 27
 init()
 iter, sum = solve_queen()
 print("# of iterations:", iter)
