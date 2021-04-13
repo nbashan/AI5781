@@ -4,7 +4,7 @@ import random
 
 # As we did in class,
 # we will represent the board as a one-dimensional array where each position
-# in the array is the nth queen's column value. So if the array is: [1, 3, 0, 2],
+# in the array is the n'th queen's column value. So if the array is: [1, 3, 0, 2],
 # then the first queen is in position 1 (from 0--3), the second queen is in position 3 (the last column),
 # the third queen is in the first column and the last queen is the in the second position.
 
@@ -120,8 +120,6 @@ def next_row_is_safe(column):
     row = len(columns)
     # check column
 
-
-#
     if matrix[row][column] != 0:
         return False
 
@@ -150,4 +148,3 @@ iter, sum = solve_queen()
 print("# of iterations:", iter)
 print("# of queens placed + backtracks:", sum)
 print(columns)
-
