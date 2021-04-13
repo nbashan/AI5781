@@ -7,7 +7,7 @@ import random
 # in the array is the n'th queen's column value. So if the array is: [1, 3, 0, 2],
 # then the first queen is in position 1 (from 0--3), the second queen is in position 3 (the last column),
 # the third queen is in the first column and the last queen is the in the second position.
-size = 8
+
 columns = []
 
 
@@ -29,7 +29,7 @@ def place_n_queens(size):
 
 
 # Now, we can print the result with a simple loop:
-def display():
+def display(size):
     for row in range(len(columns)):
         for column in range(size):
             if column == columns[row]:
@@ -37,11 +37,6 @@ def display():
             else:
                 print(' .', end=' ')
         print()
-
-
-place_n_queens(size)
-display()
-print(columns)
 
 
 # This of course is not necessary legal, so we'll write a simple DFS search with backtracking:
@@ -60,7 +55,7 @@ def solve_queen(size):
         print(number_of_moves)'''
         while column < size:
             number_of_iterations += 1
-            if next_row_is_safe(column):
+            if next_row_is_safe(column, size):
                 place_in_next_row(column)
                 number_of_moves += 1
                 row += 1
@@ -74,7 +69,7 @@ def solve_queen(size):
             # if board is full, we have a solution
             if row == size:
                 print("I did it! Here is my solution")
-                display()
+                display(size)
                 # print(number_of_moves)
                 return number_of_iterations, number_of_moves
             # I couldn't find a solution so I now backtrack
@@ -110,7 +105,7 @@ def remove_in_current_row():
     return -1
 
 
-def next_row_is_safe(column):
+def next_row_is_safe(column, size):
     row = len(columns)
     # check column
     for queen_column in columns:
@@ -140,7 +135,16 @@ def next_row_is_safe(column):
 # columns = [] #columns is the locations for each of the queens
 
 
-iter, sum = solve_queen(size)
-print("# of iterations:", iter)
-print("# of queens placed + backtracks:", sum)
-print(columns)
+# Used for calling from Main
+def start(size):
+    place_n_queens(size)
+    display(size)
+    print(columns)
+    iter, sum = solve_queen(size)
+    print("# of iterations:", iter)
+    print("# of queens placed + backtracks:", sum)
+    print(columns)
+    return iter, sum
+
+
+start(4)

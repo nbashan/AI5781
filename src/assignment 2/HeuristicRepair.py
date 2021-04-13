@@ -161,3 +161,6 @@ def start(size):
     while not a:
         a = solve_queen(size)
     return a
+
+
+start(4)

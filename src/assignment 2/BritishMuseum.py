@@ -13,10 +13,9 @@ columns = []
 
 # columns is the locations for each of the queens
 # columns[r] is a number c if a queen is placed at row r and column c.
-
 # hint -- you will need this for the following code: column=random.randrange(0,size)
 
-# Let's setup one iteration of the British Museum algorithm-- we'll put down 4 queens randomly.
+# Let's setup one iteration of the British Museum algorithm-- we'll put down "size" queens randomly.
 def place_n_queens(size):
     columns.clear()
     row = 0
@@ -37,13 +36,14 @@ def display(size):
         print()
 
 
-# This of course is not necessary legal, so we'll write a simple DFS search with backtracking:
+# This of course is not necessary legal, so we'll write a simple algorithm search with loop:
 def solve_queen(size):
     number_of_iterations = 1
     place_n_queens(size)
     # iterate over rows of board
     while not solved(size):
         number_of_iterations += 1
+        # Another try to cast lots a legal board
         place_n_queens(size)
         display(size)
         print(columns)
@@ -54,6 +54,7 @@ def solve_queen(size):
     return number_of_iterations
 
 
+# We will check that all rows are without threats
 def solved(size):
     flag = True
     for i in range(1, size):
@@ -62,18 +63,7 @@ def solved(size):
     return flag
 
 
-# This code is nice, but it uses three functions:
-
-# place_in_next_row
-
-# remove_in_current_row
-
-# next_row_is_safe
-
-# That we now have to define
-
 def next_row_is_safe(column, index, size):
-    # row = len(columns)
     # check column
     for i in range(index):
         if column == columns[i]:
@@ -94,3 +84,6 @@ def next_row_is_safe(column, index, size):
 
 def start(size):
     return solve_queen(size)
+
+
+start(4)

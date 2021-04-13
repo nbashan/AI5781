@@ -57,7 +57,7 @@ def solve_queen(size):
             while matrix[row][column] != 0 and column != size - 1:
                 column += 1
                 number_of_iterations += 1
-            if next_row_is_safe(column, size):
+            if next_row_is_safe(column):
                 place_in_next_row(column, size)
                 number_of_moves += 1
                 row += 1
@@ -116,10 +116,8 @@ def remove_in_current_row(size):
     return -1
 
 
-def next_row_is_safe(column, size):
+def next_row_is_safe(column):
     row = len(columns)
-    # check column
-
     if matrix[row][column] != 0:
         return False
 
@@ -149,3 +147,6 @@ def start(size):
     print("# of queens placed + backtracks:", sum)
     print(columns)
     return iter, sum
+
+
+start(4)
