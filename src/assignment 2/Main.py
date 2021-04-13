@@ -60,4 +60,34 @@ print("A:")
 # print("British: ", BritishCounter_15 / 20)
 print("Forward: ", "# of iterations: ", ForwardIterations_15 / 20)
 print("          # of moves: ", ForwardMoves_15 / 20)
-print("Heuristic: ", HeuristicAverage_15 / 20)
+print("Heuristic: # of iterations: ", HeuristicAverage_15 / 20)
+
+# Question 2:
+# British Museum:
+# Average iterations in British (4) =  155.75
+# Average iterations in British (6) =  10725.05
+#
+# Question 3:
+# Forward Checking:
+# As remember the counters of DFS were:
+# # of iterations: 982
+# # of queens placed + backtracks: 218
+# Q: How much did you save compared to the simple DFS algorithm ?
+# A: None!
+#          # of iterations:  982
+#          # of queens placed + backtracks:  218
+# Q: To what extent did you manage to get a solution ?
+# A: n =  27
+#
+# Question 4:
+# Heuristic Repair:
+# Q: Were you able to improve the average performance of 20 runs across the algorithm with Forward Checking ?
+# A: Yes!, # of iterations using Forward Checking was:  4796458  (when size = 27)
+# now, using the heuristic, the average is:  3302.5
+#
+# Question 5:
+# Q: What were the values of your counters for n = 15 on average?
+# A:
+# Forward:  # of iterations:  19329.8
+#           # of moves:  2416.1
+# Heuristic: # of iterations:  3420.95

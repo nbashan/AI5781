@@ -38,7 +38,7 @@ def display(size):
 
 
 # This of course is not necessary legal, so we'll write a simple DFS search with backtracking:
-def  solve_queen(size):
+def solve_queen(size):
     number_of_iterations = 1
     place_n_queens(size)
     # iterate over rows of board
