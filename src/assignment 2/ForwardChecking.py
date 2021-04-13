@@ -148,3 +148,4 @@ iter, sum = solve_queen()
 print("# of iterations:", iter)
 print("# of queens placed + backtracks:", sum)
 print(columns)
+
