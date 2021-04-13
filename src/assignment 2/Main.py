@@ -18,7 +18,7 @@ for i in range(20):
     BritishCounter_4 += BritishMuseum.start(4)
     BritishCounter_6 += BritishMuseum.start(6)
     HeuristicAverage_27 += HeuristicRepair.start(ForwardCounter_maxN)
-    BritishCounter_15 += BritishMuseum.start(15)
+    #BritishCounter_15 += BritishMuseum.start(15)
     ForwardIterations_15temp, ForwardMoves_15temp = ForwardChecking.start(15)
     ForwardIterations_15 += ForwardIterations_15temp
     ForwardMoves_15 += ForwardMoves_15temp

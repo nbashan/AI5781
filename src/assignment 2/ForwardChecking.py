@@ -143,7 +143,6 @@ def init(size):
 
 
 def start(size):
-    size = 27
     init(size)
     iter, sum = solve_queen(size)
     print("# of iterations:", iter)
