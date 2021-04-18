@@ -14,6 +14,8 @@ columns = []
 
 matrix = []
 
+size = 15
+
 
 # hint -- you will need this for the following code: column=random.randrange(0,size)
 # Let's setup one iteration of the British Museum algorithm-- we'll put down 4 queens randomly.
@@ -57,6 +59,7 @@ def solve_queen(size):
             while matrix[row][column] != 0 and column != size - 1:
                 column += 1
                 number_of_iterations += 1
+            # if the row is safe so we can place the queen in the place and move on to the next row
             if next_row_is_safe(column):
                 place_in_next_row(column, size)
                 number_of_moves += 1
@@ -86,23 +89,31 @@ def solve_queen(size):
             # start checking at column = (1 + value of column in previous row)
             column = 1 + prev_column
 
+
 # This code is nice, but it uses three functions:
 # place_in_next_row
 # remove_in_current_row
 # next_row_is_safe
 
 
-# That we now have to define
+# has 2 responsibilities:
+# 1: add the queen to the board - line 109
+# 2: add all the threats that the queen has made.
 
 def place_in_next_row(column, size):
     row = len(columns) + 1
     # check diagonal
     for i in range(row, size):
         for j in range(size):
-            if (j - i == column - row + 1 or size - j - i == size - column - row + 1 or j == column) and matrix[i][j] == 0:
+            if (j - i == column - row + 1 or size - j - i == size - column - row + 1 or j == column) and matrix[i][
+                j] == 0:
                 matrix[i][j] = row
     columns.append(column)
 
+
+# helper function for backtracking when ever whe back track
+# we need to take out all the threats that the backtracked queen has threatned
+# and remove the current queen
 
 def remove_in_current_row(size):
     if len(columns) > 0:
@@ -116,6 +127,9 @@ def remove_in_current_row(size):
     return -1
 
 
+# if the place in matrix is equal to zero so it is safe
+# other wise it has a threat and it is not safe!
+
 def next_row_is_safe(column):
     row = len(columns)
     if matrix[row][column] != 0:
@@ -124,11 +138,14 @@ def next_row_is_safe(column):
     return True
 
 
+# initialize the matrix that will store the data of threats in columns
+
 def init(size):
     for i in range(size):
         matrix.append([])
         for j in range(size):
             matrix[i].append(0)
+
 
 # Things should be ok but we don't have the counters I asked for.
 # That will be the first things you'll need to add.
@@ -139,6 +156,8 @@ def init(size):
 # for i in range(0, 100):
 #    columns = [] #columns is the locations for each of the queens
 
+
+# function to call from main that calls a function that solves the n queen problem
 
 def start(size):
     init(size)

@@ -55,6 +55,7 @@ def solve_queen(size):
         print(number_of_moves)'''
         while column < size:
             number_of_iterations += 1
+            #if the row is safe so we can place the queen in the place and move on to the next row
             if next_row_is_safe(column, size):
                 place_in_next_row(column)
                 number_of_moves += 1

@@ -41,6 +41,11 @@ def solve_queen(size):
     number_of_iterations = 1
     place_n_queens(size)
     # iterate over rows of board
+
+    # this while loop is the main part of british museum
+    # we call place_n_queens that places size amount randomly on the board randomly
+    # the while will stop when the board is stopped
+
     while not solved(size):
         number_of_iterations += 1
         # Another try to cast lots a legal board

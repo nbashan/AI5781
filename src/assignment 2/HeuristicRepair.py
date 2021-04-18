@@ -16,24 +16,36 @@ def place_n_queens(size):
         row += 1
 
 
+# main function to solve the queen
+
 def solve_queen(size):
     global number_of_iterations
     place_n_queens(size)
     # iterate over rows of board
 
+    # two lists to check if the hill climbing got
+    # stuck and is doing the same thing on and on
     last_state_1 = []
     last_state_2 = []
+
     deep_copy(columns, last_state_1, size)
     flag_pos = True
 
     while not solved(size):
         number_of_iterations += 1
 
+        ###################################################################################
+        #######   OUR HEURISTIC IS TO MOVE THE QUEEN THAT THE DECREASE IS THE LARGEST
+        ###################################################################################
         max_decrease_threat = 0
+
         row_max_decrease_threat = 0
         column_max_decrease_threat = (columns[0] + 1) % size
 
         for i in range(size):
+
+            # the amount of threats the
+            # current queen has in the current row
             queen_threat = amount_threatened(columns[i], i, size)
 
             # loop over all columns in certain row
@@ -41,6 +53,8 @@ def solve_queen(size):
                 if j != columns[i]:
 
                     # calls amount_threatened that accepts column and row
+                    #  we add 3 because that the amount of threats that queen_threat
+                    # equals three extra threats 2 on each diagonal and 1 in the column
                     queen_check = amount_threatened(j, i, size) + 3
 
                     # found a place to move
@@ -51,9 +65,14 @@ def solve_queen(size):
 
         move_most_threatened_queen(row_max_decrease_threat, column_max_decrease_threat)
         if not flag_pos and columns == last_state_1:
+            # this happens when going to moving the best queen doesn't
+            # help and it is stuck doing the same thing on and on
             print("hill climbing got stuck################################################################")
             display(size)
             return False
+
+        # each time we need to store two
+        # matrix in last_state_1 and last_state_2
         if flag_pos:
             deep_copy(columns, last_state_2, size)
             flag_pos = False
@@ -70,6 +89,8 @@ def solve_queen(size):
     return number_of_iterations
 
 
+# function for copying 1 list to another
+
 def deep_copy(list1, list2, size):
     if len(list2) == 0:
         for i in range(size):
@@ -79,22 +100,13 @@ def deep_copy(list1, list2, size):
             list2[i] = list1[i]
 
 
-def sort_tuple(tup):
-    # getting length of list of tuples
-    lst = len(tup)
-    for i in range(0, lst):
-
-        for j in range(0, lst - i - 1):
-            if tup[j][1] > tup[j + 1][1]:
-                temp = tup[j]
-                tup[j] = tup[j + 1]
-                tup[j + 1] = temp
-    return tup
-
+# moves most threatened queen in certain row to new_column
 
 def move_most_threatened_queen(row, new_column):
     columns[row] = new_column
 
+
+# function that returns true if the matrix is solved
 
 def solved(size):
     flag = True
@@ -114,6 +126,8 @@ def display(size):
                 print(' .', end=' ')
         print()
 
+
+# function to check if the row is safe
 
 def next_row_is_safe(column, index, size):
     # row = len(columns)
@@ -135,26 +149,30 @@ def next_row_is_safe(column, index, size):
     return True
 
 
+# function that gets the column and a row and returns the amount of threats the place has
+
 def amount_threatened(column, row, size):
     counter = -3
 
     for queen_column in columns:
         if queen_column == column:
-            counter += 1
+            counter += 1  # they have a threat
 
     # check diagonal
     for queen_row, queen_column in enumerate(columns):
         if queen_column - queen_row == column - row:
-            counter += 1
+            counter += 1  # they have a threat
 
     # check other diagonal
     for queen_row, queen_column in enumerate(columns):
         if ((size - queen_column) - queen_row
                 == (size - column) - row):
-            counter += 1
+            counter += 1  # they have a threat
 
     return counter
 
+
+# function to start the process
 
 def start(size):
     a = solve_queen(size)
