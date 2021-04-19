@@ -12,9 +12,17 @@ columns = []
 # columns is the locations for each of the queens
 # columns[r] is a number c if a queen is placed at row r and column c.
 
-matrix = []
 
-size = 15
+# Our method is as follows:
+# we construct a matrix corresponding in size to the calendar of the queens.
+# At first the whole matrix is filled with "0".
+# Each queen we put on the board we mark all the places it threatens by changing their contents
+# from 0 to the position of the matrix on the board.
+# for example if in square [1,1] we put a queen
+# then we mark all its diagonals (which marked with 0) and its column marked [1,1].
+# In this way we will know to eliminate the specific threats
+# that this queen has created when we remove the queen in the backtrack process.
+matrix = []
 
 
 # hint -- you will need this for the following code: column=random.randrange(0,size)
@@ -40,10 +48,10 @@ def display(size):
         print()
 
 
-# This of course is not necessary legal, so we'll write a simple DFS search with backtracking:
+# This of course is not necessary legal, so we'll write a simple Forward Checking::
 def solve_queen(size):
     columns.clear()
-    number_of_moves = 0  # where do I change this so it counts the number of Queen moves?
+    number_of_moves = 0
     number_of_iterations = 0
     row = 0
     column = 0
@@ -56,6 +64,9 @@ def solve_queen(size):
         print(number_of_moves)'''
         while column < size:
             number_of_iterations += 1
+            # if matrix[row][column] != 0 it's mean that this box is already threatened
+            # so we will not put a queen in it and we will advance to the next column in the same row
+            # until we reach the last column where column == size - 1
             while matrix[row][column] != 0 and column != size - 1:
                 column += 1
                 number_of_iterations += 1
@@ -96,8 +107,8 @@ def solve_queen(size):
 # next_row_is_safe
 
 
-# has 2 responsibilities:
-# 1: add the queen to the board - line 109
+# this func has 2 responsibilities:
+# 1: add the queen to the board - the "append" command
 # 2: add all the threats that the queen has made.
 
 def place_in_next_row(column, size):
@@ -105,14 +116,15 @@ def place_in_next_row(column, size):
     # check diagonal
     for i in range(row, size):
         for j in range(size):
-            if (j - i == column - row + 1 or size - j - i == size - column - row + 1 or j == column) and matrix[i][
-                j] == 0:
+            # (j - i == column - row + 1) means first diagonal
+            # (size - j - i == size - column - row + 1) means other diagonal
+            if (column-row + 1 == j-i or size - j - i == size - column - row + 1 or j == column) and matrix[i][j] == 0:
                 matrix[i][j] = row
     columns.append(column)
 
 
 # helper function for backtracking when ever whe back track
-# we need to take out all the threats that the backtracked queen has threatned
+# we need to take out all the threats that the backtracked queen has threatened
 # and remove the current queen
 
 def remove_in_current_row(size):
@@ -161,11 +173,11 @@ def init(size):
 
 def start(size):
     init(size)
-    iter, sum = solve_queen(size)
+    iter, my_sum = solve_queen(size)
     print("# of iterations:", iter)
-    print("# of queens placed + backtracks:", sum)
+    print("# of queens placed + backtracks:", my_sum)
     print(columns)
-    return iter, sum
+    return iter, my_sum
 
 
 start(4)

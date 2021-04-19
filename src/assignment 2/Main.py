@@ -16,13 +16,16 @@ BritishCounter_4 = 0
 # for calculates the average number of iterations
 BritishCounter_6 = 0
 
-# For running the Forward-Checking algorithm with max size we have achieved =  4
+# For running the Forward-Checking algorithm with max size we have achieved =  27
 ForwardCounter_maxN = 27
 
 # For running the Forward-Checking algorithm with max size we have achieved,
 # For calculates the average number of iterations
 HeuristicAverage_27 = 0
 
+# For running the British-Museum algorithm with size = 15
+# For calculates the average number of iterations
+# (The British algorithm (15) took way too long so we did not run it because it stuck the run!)
 # BritishCounter_15 = 0
 
 # For running the Forward-Checking algorithm with size = 15
@@ -30,7 +33,7 @@ HeuristicAverage_27 = 0
 ForwardIterations_15 = 0
 ForwardMoves_15 = 0
 
-# For running the  Heuristic-Repair algorithm with size = 15
+# For running the Heuristic-Repair algorithm with size = 15
 # For calculates the average number of iterations
 HeuristicAverage_15 = 0
 
@@ -100,10 +103,12 @@ print()
 print("Question 5:")
 print("     Q: What were the values of your counters for n = 15 on average?")
 print("     A:")
-# print("British: ", BritishCounter_15 / 20)
+# print("     British: ", "# of iterations: ", BritishCounter_15 / 20)
 print("     Forward: ", "# of iterations: ", ForwardIterations_15 / 20)
 print("               # of moves: ", ForwardMoves_15 / 20)
 print("     Heuristic: # of iterations: ", HeuristicAverage_15 / 20)
+print("     (The British algorithm (15) took way too long so we did not run it because it stuck the run)")
+
 
 # ##################################################---OUR RESULTS:---##################################################
 
@@ -145,3 +150,4 @@ print("     Heuristic: # of iterations: ", HeuristicAverage_15 / 20)
 #      Forward:  # of iterations:  19329.8
 #                # of moves:  2416.1
 #      Heuristic: # of iterations:  1754.4
+#      (The British algorithm (15) took way too long so we did not run it because it stuck the run)

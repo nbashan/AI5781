@@ -10,7 +10,6 @@ import random
 
 columns = []
 
-
 # columns is the locations for each of the queens
 # columns[r] is a number c if a queen is placed at row r and column c.
 
@@ -55,7 +54,7 @@ def solve_queen(size):
         print(number_of_moves)'''
         while column < size:
             number_of_iterations += 1
-            #if the row is safe so we can place the queen in the place and move on to the next row
+            # if the row is safe so we can place the queen in the place and move on to the next row
             if next_row_is_safe(column, size):
                 place_in_next_row(column)
                 number_of_moves += 1
@@ -141,11 +140,11 @@ def start(size):
     place_n_queens(size)
     display(size)
     print(columns)
-    iter, sum = solve_queen(size)
+    iter, my_sum = solve_queen(size)
     print("# of iterations:", iter)
-    print("# of queens placed + backtracks:", sum)
+    print("# of queens placed + backtracks:", my_sum)
     print(columns)
-    return iter, sum
+    return iter, my_sum
 
 
 start(4)

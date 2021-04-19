@@ -6,7 +6,7 @@ columns = []
 number_of_iterations = 1
 
 
-# Let's setup one iteration of the British Museum algorithm-- we'll put down 4 queens randomly.
+# Let's setup one iteration of the British Museum algorithm-- we'll put down "size" queens randomly.
 def place_n_queens(size):
     columns.clear()
     row = 0
@@ -35,7 +35,7 @@ def solve_queen(size):
         number_of_iterations += 1
 
         ###################################################################################
-        #######   OUR HEURISTIC IS TO MOVE THE QUEEN THAT THE DECREASE IS THE LARGEST
+        # ####   OUR HEURISTIC IS TO MOVE THE QUEEN THAT THE DECREASE IS THE LARGEST ######
         ###################################################################################
         max_decrease_threat = 0
 
@@ -45,7 +45,7 @@ def solve_queen(size):
         for i in range(size):
 
             # the amount of threats the
-            # current queen has in the current row
+            # current queen (columns[i]) has in the current row (i)
             queen_threat = amount_threatened(columns[i], i, size)
 
             # loop over all columns in certain row
@@ -64,9 +64,10 @@ def solve_queen(size):
                         column_max_decrease_threat = j
 
         move_most_threatened_queen(row_max_decrease_threat, column_max_decrease_threat)
+
+        # this happens when going to moving the best queen doesn't
+        # help and it is stuck doing the same thing on and on
         if not flag_pos and columns == last_state_1:
-            # this happens when going to moving the best queen doesn't
-            # help and it is stuck doing the same thing on and on
             print("hill climbing got stuck################################################################")
             display(size)
             return False
@@ -130,7 +131,6 @@ def display(size):
 # function to check if the row is safe
 
 def next_row_is_safe(column, index, size):
-    # row = len(columns)
     # check column
     for i in range(index):
         if column == columns[i]:
@@ -152,6 +152,8 @@ def next_row_is_safe(column, index, size):
 # function that gets the column and a row and returns the amount of threats the place has
 
 def amount_threatened(column, row, size):
+    # Each queen supposedly threatens herself 3 times (2 diagonals + 1 column)
+    # and I do not want to count these threats as real
     counter = -3
 
     for queen_column in columns:
