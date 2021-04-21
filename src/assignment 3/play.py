@@ -1,6 +1,6 @@
 import alphaBetaPruning
 import game
-# dfgdfg
+
 while True:
     board=game.create()
     game.whoIsFirst(board)
@@ -10,4 +10,3 @@ while True:
         else:
             board=alphaBetaPruning.go(board)
     game.printState(board)
-
