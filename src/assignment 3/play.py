@@ -7,13 +7,13 @@ print("Initial Game")
 game.printState(board)
 game.decideWhoIsFirst(board)
 comp_count = 0
-for i in range(0, 100):  # This loops takes about 15 seconds on my computer
-    # for i in range(0,50):
+for i in range(0, 100):  # This loops takes about 10 seconds on our computer!
     while not game.isFinished(board):
         if game.isHumTurn(board):
             game.inputRandom(board)
             # game.inputMove(board)
         else:
+            # The step of the computer according to our heuristic
             board = alphaBetaPruning.go(board)
         game.printState(board)
     if game.value(board) == 10**20:  # the computer (or smart agent) won
@@ -22,4 +22,3 @@ for i in range(0, 100):  # This loops takes about 15 seconds on my computer
     game.create(board)
 print("The agent beat you:", comp_count, " out of ", i+1)
 print("Your grade in this section would be ", max(comp_count-90, 0)*2, " out of 20 ")
-# print("Your grade in this section would be ", max(comp_count-40,0)*4, " out of 20 ")

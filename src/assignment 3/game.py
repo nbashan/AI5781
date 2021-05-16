@@ -96,10 +96,10 @@ def checkSeq(s, r1, c1, r2, c2):
         return LOSS
 
     elif sum > 0 and sum < COMPUTER:
-        return -1*(9.5**sum)
+        return -1*(9.6**sum)
 
     elif sum > 0 and sum % COMPUTER == 0:
-        return 9.5**(sum//5)
+        return 9.6**(sum//5)
 
     return 0.00001  # not 0 because TIE is 0
 
