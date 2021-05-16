@@ -9,6 +9,7 @@ SIZE = 4  # the length of winning seq.
 COMPUTER = SIZE + 1  # Marks the computer's cells on the board
 HUMAN = 1  # Marks the human's cells on the board
 
+
 rows = 6
 columns = 7
 
