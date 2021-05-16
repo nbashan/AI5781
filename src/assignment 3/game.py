@@ -83,7 +83,7 @@ def value(s):
         val = TIE # if size is equal to zero that means that
     return val
 
-#returns huristic value of on of 4 optional postions \:down |:down /:up |:up
+# returns huristic value of on of 4 optional postions \:down |:down /:up |:up
 def checkSeq(s, r1, c1, r2, c2):
     # r1, c1 are in the board. if r2,c2 not on board returns 0.
     # Checks the seq. from r1,c1 to r2,c2. If all X returns VICTORY. If all O returns LOSS.
