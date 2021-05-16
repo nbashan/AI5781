@@ -80,14 +80,14 @@ def value(s):
                 else:
                     val += t # add huristic value
     if s.size == 0 and val not in [LOSS, VICTORY]:
-        val = TIE # if size is equal to zero that means that
+        val = TIE # if size is equal to zero that means that game ended at a time
     return val
 
-# returns huristic value of on of 4 optional postions \:down |:down /:up |:up
+# returns heuristic value of on of 4 optional positions \:down |:down /:up |:up
 def checkSeq(s, r1, c1, r2, c2):
     # r1, c1 are in the board. if r2,c2 not on board returns 0.
     # Checks the seq. from r1,c1 to r2,c2. If all X returns VICTORY. If all O returns LOSS.
-    # If empty returns 0.00001. If no Os returns 1. If no Xs returns -1.
+    # If empty returns 0.00001. If no Os returns 9.5**(sum//5). If no Xs returns -1*(9.5**sum).
     if r2 < 0 or c2 < 0 or r2 >= rows or c2 >= columns:
         return 0  # r2, c2 are illegal
 
@@ -108,14 +108,17 @@ def checkSeq(s, r1, c1, r2, c2):
     elif sum > 0 and sum < COMPUTER:
 #######################################################################################
 #   we noticed that sum of chips is a big factor so we wanted to give it a value
-##  we found that it is an exponnestial function with extrem point at 9.5
+#  we found that if we do it with an exponnestial function with extrem point at 9.5
+# it gives the precise heuristic (100%!!!)
         return -1*(9.5**sum)
 ######################################################################################
 
     elif sum > 0 and sum % COMPUTER == 0:
+
 #####################################################################################
-##   we noticed that sum of chips is a big factor so we wanted to give it a value
-##   we found that it is an exponnestial function with extrem point at 9.5
+#   we noticed that sum of chips is a big factor so we wanted to give it a value
+#  we found that if we do it with an exponnestial function with extrem point at 9.5
+# it gives the precise heuristic (100%!!!)
         return 9.5**(sum//5)
 ######################################################################################
 
@@ -227,7 +230,10 @@ def inputRandom(s):
             flag = False
             makeMove(s, c)
 
-#returns a list of all optional moves
+# returns a list of all optional moves
+
+# every state get heuristic value by game.value func!
+
 def getNext(s):
     # returns a list of the next states of s
     ns = []

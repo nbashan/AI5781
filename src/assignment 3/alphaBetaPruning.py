@@ -45,7 +45,7 @@ def abmax(gm, d, a, b):
     v = float("-inf")
     ns = game.getNext(gm)
     # print("next moves:", len(ns), " possible moves ")
-    # loop over all states and found the state with the lowest value
+    # loop over all states and found the state with the lowest heuristic value
     bestMove = 0
     for st in ns:
         # call to the next depth of search, there we want the lowest heuristic value
@@ -85,7 +85,7 @@ def abmin(gm, d, a, b):
     # list of next states
     ns = game.getNext(gm)
     # print("next moves:", len(ns), " possible moves ")
-    # loop over all states and found the state with the lowest value
+    # loop over all states and found the state with the lowest heuristic value
     bestMove = 0
     for st in ns:
         # call to the next depth of search, there we want the highest heuristic value
