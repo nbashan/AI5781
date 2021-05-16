@@ -1,13 +1,20 @@
 import game
-import copy
+
 DEPTH = 2
 
 
-def go(s):
-    if game.isHumTurn(s):
-        return abmin(s,DEPTH,game.LOSS-1,game.VIC+1)[1]
+def go(gm):
+    # print("In go of game ", gm.board)
+    if game.isHumTurn(gm):
+        # print("Turn of human")
+        obj = abmin(gm, DEPTH, game.LOSS - 1, game.VICTORY + 1)[1]
+        # print("object board: ",obj.board)
+        return obj
     else:
-        return abmax(s,DEPTH,game.LOSS-1,game.VIC+1)[1]
+        # print("Turn of agent")
+        obj = abmax(gm, DEPTH, game.LOSS - 1, game.VICTORY + 1)[1]
+        # print("object board: ",obj.board)
+        return obj
 
 
 # s = the state (max's turn)
@@ -15,41 +22,56 @@ def go(s):
 # a,b = alpha and beta
 # returns [v, ns]: v = state s's value. ns = the state after recomended move.
 #        if s is a terminal state ns=0.
-def abmax(s, d, a, b):
-    if d==0 or game.isFinished(s):
-        return [game.value(s), 0]
+def abmax(gm, d, a, b):
+    # print("now calculate abmax")
+    # print("d=",d)
+    # print("alpha=",a)
+    # print("beta=",b)
+    if d == 0 or game.isFinished(gm):
+        # print("returns ", [game.value(gm), gm])
+        return [game.value(gm), gm]
     v = float("-inf")
-    ns = game.getNext(s)
+    ns = game.getNext(gm)
+    # print("next moves:", len(ns), " possible moves ")
     bestMove = 0
-    for i in ns:
-        tmp=abmin(copy.deepcopy(i),d-1,a,b)
-        if tmp[0]>v:
+    for st in ns:
+        tmp = abmin(st, d - 1, a, b)
+        if tmp[0] > v:
             v = tmp[0]
-            bestMove=i
+            bestMove = st
         if v >= b:
-            return [v,i]
+            return [v, st]
         if v > a:
-            a=v
-    return [v,bestMove]
+            a = v
+    return [v, bestMove]
 
-#s = the state (min's turn)
-#d = max. depth of search
-#a,b = alpha and beta
-#returns [v, ns]: v = state s's value. ns = the state after recomended move.
+
+# s = the state (min's turn)
+# d = max. depth of search
+# a,b = alpha and beta
+# returns [v, ns]: v = state s's value. ns = the state after recomended move.
 #        if s is a terminal state ns=0.
-def abmin(s,d,a,b):
-    if d==0 or game.isFinished(s):
-        return [game.value(s),0]
-    v=float("inf")
-    ns = game.getNext(s)
-    bestMove=0
-    for i in ns:
-        tmp = abmax(copy.deepcopy(i), d - 1, a, b)
-        if tmp[0]<v:
+def abmin(gm, d, a, b):
+    # print("now calculate abmin")
+    # print("d=",d)
+    # print("a=",a)
+    # print("b=",b)
+
+    if d == 0 or game.isFinished(gm):
+        # print("returns ", [game.value(gm), gm])
+        return [game.value(gm), 0]
+    v = float("inf")
+
+    ns = game.getNext(gm)
+    # print("next moves:", len(ns), " possible moves ")
+    bestMove = 0
+    for st in ns:
+        tmp = abmax(st, d - 1, a, b)
+        if tmp[0] < v:
             v = tmp[0]
-            bestMove = i
+            bestMove = st
         if v <= a:
-            return [v,i]
+            return [v, st]
         if v < b:
             b = v
     return [v, bestMove]
