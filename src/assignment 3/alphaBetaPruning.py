@@ -13,7 +13,6 @@ def go(gm):
         # print("Turn of human")
         # find the state with the min heuristic value
         obj = abmin(gm, DEPTH, game.LOSS - 1, game.VICTORY + 1)[1]
-        # print("object board: ",obj.board)
         # return
         return obj
     else:
@@ -26,16 +25,18 @@ def go(gm):
 
 # s = the state (max's turn)
 # d = max. depth of search
-# a,b = alpha and beta
+# alpha = 10**20 - 1 (generally uses to find the min)
+# beta =  10**20 + 1 (generally uses to find the max)
 # returns [v, ns]: v = state s's value. ns = the state after recommended move.
 #        if s is a terminal state ns=0.
+
 
 # In this function we look for the situation with the highest heuristic value from the next steps
 def abmax(gm, d, a, b):
     # print("now calculate abmax")
-    # print("d=",d)
-    # print("alpha=",a)
-    # print("beta=",b)
+    # d = depth of search at this call
+    # alpha = 10**20 - 1
+    # beta =  10**20 + 1
 
     # stop conditions: DEPTH = 0 (no more searches) or game-over
     if d == 0 or game.isFinished(gm):
@@ -51,6 +52,7 @@ def abmax(gm, d, a, b):
         # call to the next depth of search, there we want the lowest heuristic value
         tmp = abmin(st, d - 1, a, b)
         # we want to find the highest state's value(, so at start we init v with value of -infinity)
+        # tmp[0] is the value of v we get from abmin
         if tmp[0] > v:
             v = tmp[0]
             bestMove = st
@@ -58,23 +60,24 @@ def abmax(gm, d, a, b):
         if v >= b:
             return [v, st]
         # the wonted state's value is high then loss so we can do update
-        if v > a:
-            a = v
+        # if v > a:
+        #    a = v
     return [v, bestMove]
 
 
 # s = the state (min's turn)
 # d = max. depth of search
-# a,b = alpha and beta
+# alpha = 10**20 - 1 (generally uses to find the min)
+# beta =  10**20 + 1 (generally uses to find the max)
 # returns [v, ns]: v = state s's value. ns = the state after recommended move.
 #        if s is a terminal state ns=0.
 
 # In this function we look for the situation with the lowest heuristic value from the next steps
 def abmin(gm, d, a, b):
     # print("now calculate abmin")
-    # print("d=",d)
-    # print("a=",a)
-    # print("b=",b)
+    # d = depth of search at this call
+    # alpha = 10**20 - 1
+    # beta =  10**20 + 1
 
     # stop conditions: DEPTH = 0 (no more searches) or game-over
     if d == 0 or game.isFinished(gm):
@@ -90,7 +93,8 @@ def abmin(gm, d, a, b):
     for st in ns:
         # call to the next depth of search, there we want the highest heuristic value
         tmp = abmax(st, d - 1, a, b)
-        # we want to find the lowest state's value(, so at start we init v with value of +infinity)
+        # we want to find the lowest state's value (, so at start we init v with value of +infinity)
+        # tmp[0] is the value of v we get from abmax
         if tmp[0] < v:
             v = tmp[0]
             bestMove = st
@@ -98,6 +102,6 @@ def abmin(gm, d, a, b):
         if v <= a:
             return [v, st]
         # the wonted state's value is less then victory+1 so we can do update
-        if v < b:
-            b = v
+        # if v < b:
+        #    b = v
     return [v, bestMove]
