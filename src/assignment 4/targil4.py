@@ -11,46 +11,69 @@ In this homework, we will learn about SKLEARN and a little about how Python deal
 
 import numpy as np
 import pandas as pd
-url = 'https://github.com/rosenfa/nn/blob/master/pima-indians-diabetes.csv?raw=true'
-df=pd.read_csv(url,  header=0, error_bad_lines=False) 
-X = np.asarray(df.drop('Outcome',1))
-y = np.asarray(df['Outcome'])
-
-"""Let's print the dataset so we can see what we got!"""
-
-df
-
-"""Now let's add libraries for learning"""
-
 from sklearn import tree #For decision trees
 from sklearn.model_selection import cross_val_score #For cross validation
 import matplotlib.pyplot as plt #for plotting graphs
 from sklearn import datasets #for datasets
+from sklearn.metrics import plot_confusion_matrix
 
-clf = tree.DecisionTreeClassifier()
-clf.max_depth = 5
-print("Decision Tree: ")
-accuracy = cross_val_score(clf, X, y, scoring='accuracy', cv=10)
-print("Average Accuracy of  DT with depth ", clf.max_depth, " is: ", round(accuracy.mean(),3))
 
-"""We can do this for other datasets that are built-in to Sklearn:"""
 
+
+url = 'https://github.com/rosenfa/nn/blob/master/pima-indians-diabetes.csv?raw=true'
 iris = datasets.load_iris()
-#mylist = []
-#do loop
-clf = tree.DecisionTreeClassifier()
-clf.max_depth = 5
-clf.criterion = 'entropy'
-print("Decision Tree: ")
-accuracy = cross_val_score(clf, iris.data, iris.target, scoring='accuracy', cv=10)
-print("Average Accuracy of  DT with depth ", clf.max_depth, " is: ", round(accuracy.mean(),3))
-#mylist.append(accuracy.mean())  loop, can be used to plot later…
-precision = cross_val_score(clf, iris.data, iris.target, scoring='precision_weighted', cv=10)
-print("Average precision_weighted of  DT with depth ", clf.max_depth, " is: ", round(precision.mean(),3))
+df=pd.read_csv(url,  header=0, error_bad_lines=False) 
+X = np.asarray(df.drop('Outcome',1))#feature
+y = np.asarray(df['Outcome'])#label
+
+listDA = []
+listDP = []
+
+listIA = []
+listIP = []
+for i in range(1,11):
+    clf = tree.DecisionTreeClassifier(max_depth=i)
+    accuracyD = cross_val_score(clf, X, y, scoring='accuracy', cv=10)
+    listDA.append(accuracyD.mean())
+    precisionD = cross_val_score(clf, X,y, scoring='precision_weighted', cv=10)
+    listDP.append(precisionD.mean())
+
+    clf = tree.DecisionTreeClassifier(max_depth = i,criterion = 'entropy')
+    accuracyI = cross_val_score(clf, iris.data, iris.target, scoring='accuracy', cv=10)
+    listIA.append(accuracyI.mean())
+    precisionI = cross_val_score(clf, iris.data, iris.target, scoring='precision_weighted', cv=10)
+    listIP.append(precisionI.mean())
+
+
+X = range(1, 11)
+print(listDA)
+plt.plot(X, listDA,label = 'acc')
+plt.plot(X, listDP,label = 'pre')
+plt.title("diabetes")
+plt.xlabel("Depth")
+plt.ylabel("Score pre/acc")
+plt.legend()
+plt.show()
+
+X = range(1, 11)
+print(listDA)
+plt.plot(X, listIA,label = 'acc')
+plt.plot(X, listIP,label = 'pre')
+plt.title("iris")
+plt.xlabel("Depth")
+plt.ylabel("Score pre/acc")
+plt.legend()
+plt.show()
+
+# X = range(10)
+# plt.plot(X, [x * x for x in X])
+# plt.xlabel("This is the X axis")
+# plt.ylabel("This is the Y axis")
+# plt.show()
+
 
 """A confusion matrix for the data..."""
 
-from sklearn.metrics import plot_confusion_matrix
 class_names = iris.target_names
 clf.max_depth = 2
 clf = clf.fit(iris.data, iris.target)
@@ -68,8 +91,3 @@ plt.show()
 
 """Hint for how to plot the results:"""
 
-#X = range(10)
-#plt.plot(X, [x * x for x in X])
-#plt.xlabel("This is the X axis")
-#plt.ylabel("This is the Y axis")
-#plt.show()
