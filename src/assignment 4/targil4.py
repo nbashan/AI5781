@@ -27,7 +27,7 @@ url = 'https://github.com/rosenfa/nn/blob/master/pima-indians-diabetes.csv?raw=t
 iris = datasets.load_iris()
 wine = datasets.load_wine()
 digits = load_digits()
-df=pd.read_csv(url,  header=0, error_bad_lines=False) 
+df = pd.read_csv(url,  header=0, error_bad_lines=False)
 X = np.asarray(df.drop('Outcome', 1))  # feature
 y = np.asarray(df['Outcome'])  # label
 
@@ -64,7 +64,7 @@ maxN = 0
 DN = 0
 
 for i in range(1, 11):
-    clf = tree.DecisionTreeClassifier(max_depth=i,criterion='entropy')
+    clf = tree.DecisionTreeClassifier(max_depth=i, criterion='entropy')
     accuracyD = cross_val_score(clf, X, y, scoring='accuracy', cv=10)
     listDA.append(accuracyD.mean())
     precisionD = cross_val_score(clf, X, y, scoring='precision_weighted', cv=10)
@@ -77,9 +77,13 @@ for i in range(1, 11):
     listDR.append(recallD.mean())
     f1scoreD = cross_val_score(clf, X, y, scoring='f1_weighted', cv=10)
     listDF.append(f1scoreD.mean())
-    print('depth', i, 'acc', round(accuracyD.mean(), 3), 'pre', round(precisionD.mean(), 3), 'f1', round(f1scoreD.mean(), 3), 'recall', round(recallD.mean(), 3), 'diabetes')
+    print('depth', i,
+          'acc', round(accuracyD.mean(), 3),
+          'pre', round(precisionD.mean(), 3),
+          'f1', round(f1scoreD.mean(), 3),
+          'recall', round(recallD.mean(), 3), 'diabetes')
 
-    clf = tree.DecisionTreeClassifier(max_depth=i,criterion='entropy')
+    clf = tree.DecisionTreeClassifier(max_depth=i, criterion='entropy')
     accuracyI = cross_val_score(clf, iris.data, iris.target, scoring='accuracy', cv=10)
     listIA.append(accuracyI.mean())
     precisionI = cross_val_score(clf, iris.data, iris.target, scoring='precision_weighted', cv=10)
@@ -92,7 +96,11 @@ for i in range(1, 11):
     listIR.append(recallI.mean())
     f1scoreI = cross_val_score(clf, iris.data, iris.target, scoring='f1_weighted', cv=10)
     listIF.append(f1scoreI.mean())
-    print('depth', i, 'acc', round(accuracyI.mean(), 3), 'pre', round(precisionI.mean(), 3), 'f1', round(f1scoreI.mean(), 3), 'recall', round(recallI.mean(), 3), 'iris')
+    print('depth', i,
+          'acc', round(accuracyI.mean(), 3),
+          'pre', round(precisionI.mean(), 3),
+          'f1', round(f1scoreI.mean(), 3),
+          'recall', round(recallI.mean(), 3), 'iris')
 
     clf = tree.DecisionTreeClassifier(max_depth=i, criterion='entropy')
     accuracyW = cross_val_score(clf, wine.data, wine.target, scoring='accuracy', cv=10)
