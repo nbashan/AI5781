@@ -104,7 +104,7 @@ for i in range(1,11):
     precisionW = cross_val_score(clf, wine.data, wine.target, scoring='precision_weighted', cv=10)
     score = precisionW.mean()
     if score > maxW:
-        maxW = scoreca
+        maxW = score
         DW = i
     listWP.append(score)
     recallW = cross_val_score(clf, X,y, scoring='recall', cv=10)
