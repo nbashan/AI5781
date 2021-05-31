@@ -28,22 +28,33 @@ y = np.asarray(df['Outcome'])#label
 
 listDA = []
 listDP = []
+listDR = []
+listDF = []
 
 listIA = []
 listIP = []
+listIR = []
+listIF = []
 
 listWA = []
 listWP = []
+listWR = []
+listWF = []
 
 listNA = []
 listNP = []
+listNR = []
+listNF = []
 
 maxD = 0
 DD = 0
+
 maxI = 0
 DI = 0
+
 maxW = 0
 DW = 0
+
 maxN = 0
 DN = 0
 
@@ -63,6 +74,10 @@ for i in range(1,11):
         maxD = score
         DD = i
     listDP.append(score)
+    recallD = cross_val_score(clf, X,y, scoring='recall', cv=10)
+    listDR.append(recallD.mean())
+    f1scoreD = cross_val_score(clf, X, y, scoring='f1', cv=10)
+    listDF.append(f1scoreD.mean())
 
     clf = tree.DecisionTreeClassifier(max_depth = i,criterion = 'entropy')
     accuracyI = cross_val_score(clf, iris.data, iris.target, scoring='accuracy', cv=10)
@@ -78,6 +93,10 @@ for i in range(1,11):
         maxI = score
         DI = i
     listIP.append(score)
+    recallR = cross_val_score(clf, X,y, scoring='recall', cv=10)
+    listIR.append(recallR.mean())
+    f1scoreI = cross_val_score(clf, X, y, scoring='f1', cv=10)
+    listIF.append(f1scoreI.mean())
 
     clf = tree.DecisionTreeClassifier(max_depth=i, criterion='entropy')
     accuracyI = cross_val_score(clf, wine.data, wine.target, scoring='accuracy', cv=10)
@@ -85,9 +104,14 @@ for i in range(1,11):
     precisionW = cross_val_score(clf, wine.data, wine.target, scoring='precision_weighted', cv=10)
     score = precisionW.mean()
     if score > maxW:
-        maxW = score
+        maxW = scoreca
         DW = i
     listWP.append(score)
+    recallW = cross_val_score(clf, X,y, scoring='recall', cv=10)
+    listWR.append(recallW.mean())
+    f1scoreW = cross_val_score(clf, X, y, scoring='f1', cv=10)
+    listWF.append(f1scoreW.mean())
+
 
     clf = tree.DecisionTreeClassifier(max_depth=i, criterion='entropy')
     accuracyI = cross_val_score(clf, digits.data, digits.target, scoring='accuracy', cv=10)
@@ -98,23 +122,32 @@ for i in range(1,11):
         maxN = score
         DN = i
     listNP.append(score)
+    recallN = cross_val_score(clf, X,y, scoring='recall', cv=10)
+    listNR.append(recallN.mean())
+    f1scoreN = cross_val_score(clf, X, y, scoring='f1', cv=10)
+    listNF.append(f1scoreN.mean())
+
 
 
 X = range(1, 11)
 plt.plot(X, listDA,label = 'acc')
 plt.plot(X, listDP,label = 'pre')
+plt.plot(X, listDR,label = 'rec')
+plt.plot(X, listDF,label = 'f1')
 plt.title("diabetes")
 plt.xlabel("Depth")
-plt.ylabel("Score pre/acc")
+plt.ylabel("Score pre/acc/rec/f1")
 plt.legend()
 plt.show()
 
 X = range(1, 11)
 plt.plot(X, listIA,label = 'acc')
 plt.plot(X, listIP,label = 'pre')
+plt.plot(X, listIR,label = 'rec')
+plt.plot(X, listIF,label = 'f1')
 plt.title("iris")
 plt.xlabel("Depth")
-plt.ylabel("Score pre/acc")
+plt.ylabel("Score pre/acc/rec/f1")
 plt.legend()
 plt.show()
 
@@ -122,18 +155,22 @@ plt.show()
 X = range(1, 11)
 plt.plot(X, listWA,label = 'acc')
 plt.plot(X, listWP,label = 'pre')
+plt.plot(X, listWR,label = 'rec')
+plt.plot(X, listWF,label = 'f1')
 plt.title("wine")
 plt.xlabel("Depth")
-plt.ylabel("Score pre/acc")
+plt.ylabel("Score pre/acc/rec/f1")
 plt.legend()
 plt.show()
 
 X = range(1, 11)
 plt.plot(X, listNA,label = 'acc')
 plt.plot(X, listNP,label = 'pre')
+plt.plot(X, listNR,label = 'rec')
+plt.plot(X, listNF,label = 'f1')
 plt.title("digits")
 plt.xlabel("Depth")
-plt.ylabel("Score pre/acc")
+plt.ylabel("Score pre/acc/rec/f1")
 plt.legend()
 plt.show()
 
